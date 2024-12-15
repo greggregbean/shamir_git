@@ -1,11 +1,11 @@
 #ifndef STORAGE_H
 #define STORAGE_H
 
-#include <sstream>
-#include <fstream>
-#include <string_view>
 #include <filesystem>
+#include <fstream>
 #include <functional>
+#include <sstream>
+#include <string_view>
 
 namespace shagit {
 
@@ -83,7 +83,7 @@ class HubStorage {
 public:
     using Id = uint64_t;
     using DirEntry = fs::directory_entry;
-    using StorageVisitor = std::function<void(fs::path, const DirEntry &)>;
+    using StorageVisitor = std::function<void(fs::path, const DirEntry&)>;
 
     static constexpr std::string_view STORAGE_DIR_VAR = "STORAGE_DIR";
     static constexpr std::string_view CR_DIR_VAR = "CR_DIR";
@@ -98,9 +98,9 @@ public:
 
     explicit HubStorage();
 
-    void ListHubs(std::stringstream &ss);
-    std::vector<Id> CreateHub(const HubInfo &proj_info);
-    Id JoinHub(Id proj_id, const ParticipantInfo &participant);
+    void ListHubs(std::stringstream& ss);
+    std::vector<Id> CreateHub(const HubInfo& proj_info);
+    Id JoinHub(Id proj_id, const ParticipantInfo& participant);
     void ApproveJoin(Id proj_id, Id pr_id);
     // Id CreateCR(Id proj_id, ...);
     void ApproveCR(Id cr_id);
@@ -109,10 +109,10 @@ public:
     ParticipantInfo GetOwner(Id hub_id);
     ParticipantInfo GetParticipant(Id hub_id, Id pr_id);
 
-    void TraverseStorage(const StorageVisitor &visitor);
+    void TraverseStorage(const StorageVisitor& visitor);
 
 private:
-    Id GenerateId(const std::string &src);
+    Id GenerateId(const std::string& src);
 
     DirEntry storage_dir_;
 };
@@ -122,12 +122,9 @@ class DirGuard {
 
 public:
     DirGuard() : path_(fs::current_path()) {}
-    ~DirGuard()
-    {
-        fs::current_path(path_);
-    }
+    ~DirGuard() { fs::current_path(path_); }
 };
 
-}  // namespace shagit
+} // namespace shagit
 
-#endif  // STORAGE_H
+#endif // STORAGE_H
