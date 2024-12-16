@@ -2,6 +2,8 @@
 
 #include "utils/macros.h"
 #include <cstdlib>
+#include <iostream>
+#include <fstream>
 
 namespace shagit {
 
@@ -97,7 +99,7 @@ void HubStorage::ApproveJoin(HubStorage::Id hub_id, HubStorage::Id pr_id) {
     fs::remove(pr_path);
 }
 
-void HubStorage::ApproveCR(HubStorage::Id cr_id) {
+void HubStorage::ApproveCR(HubStorage::Id ) {
 }
 
 void HubStorage::ListHubs(std::stringstream& ss) {

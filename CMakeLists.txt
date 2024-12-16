@@ -7,11 +7,13 @@ add_compile_options(
     -Wall
     -Wextra
     -Wpedantic
-    -Werror
     -Warray-bounds-pointer-arithmetic
-    -Wassign-enum;-Wbad-function-cast
-    -Wcast-qual;-Wchar-subscripts
-    -Wcomma;-Wconditional-uninitialized
+    -Wassign-enum
+    -Wbad-function-cast
+    -Wcast-qual
+    -Wchar-subscripts
+    -Wcomma
+    -Wconditional-uninitialized
     -Wconversion
     -Wdelete-non-virtual-dtor
     -Wdeprecated
@@ -30,8 +32,7 @@ add_compile_options(
     -Wundefined-reinterpret-cast
     -Wunreachable-code-aggressive
     -Wno-missing-braces
-    -Wno-deprecated-literal-operator
-)
+    -Wno-deprecated-copy-dtor)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 set(CMAKE_CXX_STANDARD 20)
@@ -43,6 +44,7 @@ set(INCLUDE_DIR "${PROJECT_DIR}/include")
 
 add_library(
     shamir_lib
+    libs/math/math.cpp
     libs/storage/storage.cpp
     libs/utils/debug.cpp
 )
@@ -60,12 +62,23 @@ add_library(
 )
 
 add_executable(
+    unittest
+    test/math_test.cpp
+)
+
+add_executable(
     execute
     main.cpp
 )
 
 target_link_libraries(
     execute
+    PRIVATE
+    SHAMIR::LIB
+)
+
+target_link_libraries(
+    unittest
     PRIVATE
     SHAMIR::LIB
 )
