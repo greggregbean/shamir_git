@@ -1,14 +1,13 @@
 #ifndef THREADPOOL_H
 #define THREADPOOL_H
 
-#include <thread>
-#include <atomic>
-#include <vector>
-
 #include "threadpool/queue.h"
 #include "threadpool/task.h"
 #include "threadpool/wait_group.h"
 #include "utils/macros.h"
+#include <atomic>
+#include <thread>
+#include <vector>
 
 namespace shagit {
 
@@ -28,7 +27,7 @@ public:
     void Submit(Task);
 
     // Locates current thread pool from worker thread
-    static ThreadPool *Current();
+    static ThreadPool* Current();
 
     // Waits until outstanding work count reaches zero
     void WaitIdle();
@@ -44,9 +43,9 @@ private:
     std::vector<std::thread> workers_;
     UnboundedBlockingQueue<Task> task_queue_;
     WaitGroup uncompleted_tasks_;
-    std::atomic<bool> workers_done_ {true};
+    std::atomic<bool> workers_done_{true};
 };
 
-}  // namespace shagit
+} // namespace shagit
 
-#endif  // THREADPOOL_H
+#endif // THREADPOOL_H

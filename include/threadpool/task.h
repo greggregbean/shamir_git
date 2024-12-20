@@ -7,6 +7,6 @@ namespace shagit {
 
 using Task = std::function<void()>;
 
-}  // namespace shagit
+} // namespace shagit
 
-#endif  // THREADPOOL_TASK_H
+#endif // THREADPOOL_TASK_H

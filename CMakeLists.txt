@@ -75,6 +75,27 @@ add_library(
         libs/utils/debug.cpp
 )
 
+add_library(
+    server
+        libs/server/client.cpp
+        libs/server/tcp_server.cpp
+        libs/threadpool/thread_pool.cpp
+        libs/math/math.cpp
+        libs/storage/storage.cpp
+)
+
+target_include_directories(
+    server
+    PUBLIC
+        ${INCLUDE_DIR}
+)
+
+target_link_libraries(
+    server
+    PUBLIC
+        -lboost_system
+)
+
 target_include_directories(
     shamir_lib
     PUBLIC
@@ -84,27 +105,27 @@ target_include_directories(
 add_library(
     SHAMIR::LIB
     ALIAS
-    shamir_lib
+        shamir_lib
 )
 
 add_executable(
     unittest
-    test/math_test.cpp
+        test/math_test.cpp
 )
 
 add_executable(
-    execute
-    main.cpp
+    client
+        execute/client_driver.cpp
 )
 
 target_link_libraries(
-    execute
+    client
     PRIVATE
-    SHAMIR::LIB
+        SHAMIR::LIB
 )
 
 target_link_libraries(
     unittest
     PRIVATE
-    SHAMIR::LIB
+       SHAMIR::LIB
 )
