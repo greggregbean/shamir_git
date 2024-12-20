@@ -1,3 +1,4 @@
+#include <fstream>
 #include <vector>
 
 #include "server/session.h"
@@ -129,6 +130,10 @@ void TCPServer::CreateHub(const std::vector<std::string> &data)
 
     auto secret_piece = math::ShareSecret(info.secret, info.access_number, info.participants.size());
     for (size_t i = 0; i < secret_piece.points_.size(); ++i) {
+        std::cout << info.participants[i].name + " " + std::to_string(ids[i]) +
+            " key = " + std::to_string(secret_piece.points_[i].key_) + ", " +
+            " secret piece = " + std::to_string(secret_piece.points_[i].value_) << std::endl;
+        // TODO: Send keys through email.
         SendMail("New hub",
                  "Hi, " + info.participants[i].name + "!\nYou have been invited to the " + info.proj_name +
                      " hub.\nYour Id is " + std::to_string(ids[i]) + "\nYour key is " +
@@ -190,12 +195,9 @@ void TCPServer::GetHub(Session *session)
     fs::recursive_directory_iterator file_iter(fs::current_path(), fs::directory_options::none, error);
     for (auto &iter : file_iter)
     {
-        // auto path = iter.path();
-        // std::cout << path.filename() << std::endl;
-        // iter.relative_path();
         std::cout << iter.path().filename() << std::endl;
         session->Write(iter.path().filename());
-        std::fstream file_stream(iter.path(), std::ios::binary | std::ios::in);
+        std::fstream file_stream(iter.path());
         std::string file;
         file_stream >> file;
         session->Write(file);
@@ -205,7 +207,7 @@ void TCPServer::GetHub(Session *session)
 
 void TCPServer::CreateCR(Session *session)
 {
-    
+
 }
 
 std::vector<std::string> TCPServer::SplitData(const std::string &str, char separator)

@@ -71,35 +71,43 @@ set(INCLUDE_DIR "${PROJECT_DIR}/include")
 add_library(
     shamir_lib
         libs/math/math.cpp
-        libs/storage/storage.cpp
         libs/utils/debug.cpp
-)
-
-add_library(
-    server
-        libs/server/client.cpp
-        libs/server/tcp_server.cpp
-        libs/threadpool/thread_pool.cpp
-        libs/math/math.cpp
-        libs/storage/storage.cpp
-)
-
-target_include_directories(
-    server
-    PUBLIC
-        ${INCLUDE_DIR}
-)
-
-target_link_libraries(
-    server
-    PUBLIC
-        -lboost_system
 )
 
 target_include_directories(
     shamir_lib
     PUBLIC
         ${INCLUDE_DIR}
+)
+
+add_library(
+    server_lib
+        libs/server/client.cpp
+        libs/server/tcp_server.cpp
+        libs/threadpool/thread_pool.cpp
+        libs/storage/storage.cpp
+        libs/math/math.cpp
+        libs/utils/debug.cpp
+)
+
+target_include_directories(
+    server_lib
+    PUBLIC
+        ${INCLUDE_DIR}
+        ${CLI11_INCLUDE_DIR}
+)
+
+target_link_libraries(
+    server_lib
+    PUBLIC
+        -lboost_system
+        CLI11::CLI11
+)
+
+add_library(
+    SERVER::LIB
+    ALIAS
+        server_lib
 )
 
 add_library(
@@ -122,6 +130,7 @@ target_link_libraries(
     client
     PRIVATE
         SHAMIR::LIB
+        SERVER::LIB
 )
 
 target_link_libraries(

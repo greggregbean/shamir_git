@@ -49,7 +49,6 @@ Args ParseArgs(int argc, char **argv) {
     }
     return {request, id};
 }
-
 }  // namespace
 }  // namespace shagit
 
