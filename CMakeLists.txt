@@ -1,5 +1,31 @@
 cmake_minimum_required(VERSION 3.10)
 project(SHAMIR_GIT)
+include(FetchContent)
+
+message(STATUS "Using the CLI11 library")
+FetchContent_Declare(
+    CLI11
+    GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
+    GIT_TAG "main"
+    GIT_SHALLOW ON
+)
+
+FetchContent_MakeAvailable(
+    CLI11
+)
+
+get_target_property(
+    CLI11_INCLUDE_DIR
+    CLI11::CLI11
+    INTERFACE_INCLUDE_DIRECTORIES
+)
+
+if(NOT TARGET CLI11)
+    message(
+        FATAL_ERROR
+        "Could not find CLI11 library"
+    )
+endif()
 
 add_compile_options(
     -g
@@ -44,9 +70,9 @@ set(INCLUDE_DIR "${PROJECT_DIR}/include")
 
 add_library(
     shamir_lib
-    libs/math/math.cpp
-    libs/storage/storage.cpp
-    libs/utils/debug.cpp
+        libs/math/math.cpp
+        libs/storage/storage.cpp
+        libs/utils/debug.cpp
 )
 
 target_include_directories(

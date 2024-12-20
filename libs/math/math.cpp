@@ -6,7 +6,6 @@
 
 namespace math {
 namespace {
-// ToDo: not nearest number?
 NumT GetNearestPrimeNumber(NumT num) {
     bool is_prime = false;
     for (; !is_prime; num++) {
@@ -18,7 +17,6 @@ NumT GetNearestPrimeNumber(NumT num) {
     return num - 1;
 }
 
-// ToDo: extended Euclid algorithm?
 NumT GetInverse(NumT num, NumT p) {
     NumT result = 1;
     bool sign = num < 0;
