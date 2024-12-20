@@ -126,6 +126,18 @@ add_executable(
         execute/client_driver.cpp
 )
 
+add_executable(
+    server
+        execute/server_driver.cpp
+)
+
+target_link_libraries(
+    server
+    PRIVATE
+        SHAMIR::LIB
+        SERVER::LIB
+)
+
 target_link_libraries(
     client
     PRIVATE
